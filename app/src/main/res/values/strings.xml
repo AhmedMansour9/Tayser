@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">Tayser</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="forgetpas">Forget Password?</string>
+    <string name="login">Login</string>
+    <string name="loginface">LOGIN WITH FCAEBOOK</string>
+    <string name="noacc">Don\'t Have Account?</string>
+    <string name="signupnow">SIGN UP</string>
+    <string name="fullname">Full Name</string>
+    <string name="phone">Phone</string>
+    <string name="city">City</string>
+    <string name="branch">Branches</string>
+    <string name="home">Home</string>
+    <string name="forget_pas">Forget Password</string>
+    <string name="or">Or</string>
+    <string name="log_google">Login By Google</string>
+    <string name="at">ATCS</string>
+    <string name="register">Register</string>
+    <string name="feildempty">Fill input with valid data</string>
+    <string name="pasweak">Password too weak</string>
+    <string name="validemail">Please enter a valid email address</string>
+    <string name="wrongemailorpass">Wrong Email or Password</string>
+    <string name="orders">Orders</string>
+    <string name="notifications">Notification</string>
+    <string name="more">More</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="products">Products</string>
+    <string name="mainten">Maintenance work</string>
+    <string name="imergency">Emergency services</string>
+</resources>

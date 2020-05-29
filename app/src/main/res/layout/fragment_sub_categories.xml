@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#fff"
+
+    android:id="@+id/Rela_Home">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_150sdp"
+        android:background="@drawable/ic_round"
+        />
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:id="@+id/toolbarhome"
+        android:background="@android:color/transparent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/_16sdp"
+                android:textColor="#fff"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:id="@+id/T_Title"
+                />
+
+        </RelativeLayout>
+    </androidx.appcompat.widget.Toolbar>
+
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewPagerSub"
+            android:layout_width="match_parent"
+            android:layout_marginTop="?actionBarSize"
+            android:layout_height="@dimen/_150sdp"
+            >
+
+
+        </androidx.viewpager.widget.ViewPager>
+
+    <me.relex.circleindicator.CircleIndicator
+        android:id="@+id/view_pager_circle_indicators"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="@dimen/_160sdp"
+        app:ci_height="7dp"
+        app:ci_width="7dp"></me.relex.circleindicator.CircleIndicator>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/_5sdp"
+        app:cardCornerRadius="@dimen/_5sdp"
+        app:cardElevation="1dp"
+        android:id="@+id/Card_Products"
+        android:layout_below="@+id/view_pager_circle_indicators"
+        android:layout_marginStart="@dimen/_3sdp"
+        android:layout_marginEnd="@dimen/_3sdp"
+        android:layout_height="@dimen/_90sdp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:background="@drawable/bc_category"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/imag_product"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/_25sdp"
+                android:layout_height="@dimen/_55sdp"
+                android:src="@drawable/ic_products"
+                />
+
+
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#fff"
+                android:layout_toEndOf="@+id/imag_product"
+                android:layout_centerVertical="true"
+                android:id="@+id/T_Name"
+                android:layout_marginStart="@dimen/_25sdp"
+                android:textSize="@dimen/_15sdp"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:textStyle="bold"
+                android:text="@string/products"/>
+
+
+
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/_5sdp"
+        app:cardCornerRadius="@dimen/_5sdp"
+        app:cardElevation="1dp"
+        android:id="@+id/Card_Mainten"
+        android:layout_below="@+id/Card_Products"
+        android:layout_marginStart="@dimen/_3sdp"
+        android:layout_marginEnd="@dimen/_3sdp"
+        android:layout_height="@dimen/_90sdp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:background="@drawable/bc_category"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_width="@dimen/_50sdp"
+                android:id="@+id/image_mainten"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/_25sdp"
+                android:layout_height="@dimen/_55sdp"
+                android:src="@drawable/icon_mainten"
+                />
+
+
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#fff"
+                android:layout_toEndOf="@+id/image_mainten"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/_25sdp"
+                android:textSize="@dimen/_15sdp"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:textStyle="bold"
+                android:text="@string/mainten"/>
+
+
+
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/_5sdp"
+        app:cardCornerRadius="@dimen/_5sdp"
+        app:cardElevation="1dp"
+        android:id="@+id/Card_Emergency"
+        android:layout_below="@+id/Card_Mainten"
+        android:layout_marginStart="@dimen/_3sdp"
+        android:layout_marginEnd="@dimen/_3sdp"
+        android:layout_height="@dimen/_90sdp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:background="@drawable/bc_category"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_width="@dimen/_50sdp"
+                android:id="@+id/image_emergency"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/_25sdp"
+                android:layout_height="@dimen/_55sdp"
+                android:src="@drawable/icon_emergency"
+                />
+
+
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#fff"
+                android:layout_toEndOf="@+id/image_emergency"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/_25sdp"
+                android:textSize="@dimen/_15sdp"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:textStyle="bold"
+                android:text="@string/imergency"/>
+
+
+
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>
