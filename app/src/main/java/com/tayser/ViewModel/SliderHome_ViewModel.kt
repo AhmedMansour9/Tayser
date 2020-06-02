@@ -24,11 +24,43 @@ class SliderHome_ViewModel : ViewModel()
         return listProductsMutableLiveData as MutableLiveData<SliderHome_Model>
     }
 
-    fun getSliderProducts(Lang:String,id:String, context: Context): LiveData<SliderHome_Model> {
+    fun getSliderProducts(Lang:String, context: Context): LiveData<SliderHome_Model> {
+        listProductsMutableLiveData = MutableLiveData<SliderHome_Model>()
+        this.context = context
+        getProductsSliders(Lang)
+        return listProductsMutableLiveData as MutableLiveData<SliderHome_Model>
+    }
+
+
+
+    fun getSliderSub(Lang:String,id:String, context: Context): LiveData<SliderHome_Model> {
         listProductsMutableLiveData = MutableLiveData<SliderHome_Model>()
         this.context = context
         getSectionsSliders(Lang,id)
         return listProductsMutableLiveData as MutableLiveData<SliderHome_Model>
+    }
+    private fun getProductsSliders(product_id: String) {
+        var map= HashMap<String,String>()
+        map.put("product_id",product_id)
+
+        var service = ApiClient.getClient()?.create(Service::class.java)
+        val call = service?.Products_SLider(map)
+        call?.enqueue(object : Callback, retrofit2.Callback<SliderHome_Model> {
+            override fun onResponse(call: Call<SliderHome_Model>, response: Response<SliderHome_Model>) {
+
+                if (response.code() == 200) {
+                    listProductsMutableLiveData?.setValue(response.body()!!)
+
+                } else  {
+                    listProductsMutableLiveData?.setValue(null)
+                }
+            }
+
+            override fun onFailure(call: Call<SliderHome_Model>, t: Throwable) {
+                listProductsMutableLiveData?.setValue(null)
+
+            }
+        })
     }
 
 
@@ -64,7 +96,7 @@ class SliderHome_ViewModel : ViewModel()
         map.put("lang",lang)
 
         var service = ApiClient.getClient()?.create(Service::class.java)
-        val call = service?.Products_SLider(map)
+        val call = service?.Sub_SLider(map)
         call?.enqueue(object : Callback, retrofit2.Callback<SliderHome_Model> {
             override fun onResponse(call: Call<SliderHome_Model>, response: Response<SliderHome_Model>) {
 

@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.squareup.picasso.Picasso
+import com.bumptech.glide.Glide
 import com.tayser.Model.Sections_Response
 import com.tayser.R
 import com.tayser.View.ProductBytUd_View
@@ -48,9 +48,8 @@ class Categories_Adapter (context: Context, val userList: List<Sections_Response
             val T_Name = itemView.findViewById(R.id.T_Name) as TextView
 
             T_Name.text=dataModel.title
-            Picasso.get()
-                .load("http://creativityvein.com" + dataModel.image)
-                .fit()
+            Glide.with(context)
+                .load("http://atcs-egy.com" + dataModel.image)
                 .into(img)
         }
     }

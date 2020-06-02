@@ -30,4 +30,11 @@
     <string name="products">Products</string>
     <string name="mainten">Maintenance work</string>
     <string name="imergency">Emergency services</string>
+    <string name="establish">Establish</string>
+    <string name="maintenance">Maintenance</string>
+    <string name="currency">LE</string>
+    <string name="descrip">Description</string>
+    <string name="addtocart">Add To Cart</string>
+    <string name="confirm">Confirm</string>
+    <string name="total">Total Price: </string>
 </resources>

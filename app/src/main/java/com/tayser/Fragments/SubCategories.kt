@@ -48,10 +48,25 @@ class SubCategories : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         root= inflater.inflate(R.layout.fragment_sub_categories, container, false)
-        getData();
+        getData()
+        openProducts()
 
 
         return root
+    }
+
+    private fun openProducts() {
+      root.Card_Products.setOnClickListener(){
+          var productsByid=Products()
+          val bundle = Bundle()
+          bundle.putParcelable("CategoryItem", categories)
+          productsByid.arguments=bundle
+          activity!!.supportFragmentManager.beginTransaction().add(R.id.Rela_Home, productsByid)
+              .addToBackStack(null).commit()
+
+      }
+
+
     }
 
     private fun getData() {
@@ -75,7 +90,7 @@ class SubCategories : Fragment() {
         var SliderHome: SliderHome_ViewModel =  ViewModelProvider.NewInstanceFactory().create(
             SliderHome_ViewModel::class.java)
         this.context!!.applicationContext?.let {
-            SliderHome.getSliderProducts(ChangeLanguage.getLanguage(context!!.applicationContext),id, it).observe(viewLifecycleOwner, Observer<SliderHome_Model> { loginmodel ->
+            SliderHome.getSliderSub(ChangeLanguage.getLanguage(context!!.applicationContext),id, it).observe(viewLifecycleOwner, Observer<SliderHome_Model> { loginmodel ->
                 if(loginmodel!=null) {
                     viewPagerSub!!.adapter = this.context?.let { it1 ->
                         Slider_Adapter(
