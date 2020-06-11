@@ -34,7 +34,7 @@
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_width="@dimen/_70sdp"
                     android:layout_centerHorizontal="true"
-                    android:layout_height="@dimen/_70sdp"
+                    android:layout_height="@dimen/_50sdp"
                     />
 
 
@@ -51,7 +51,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="@dimen/_15sdp"
             android:gravity="center"
-            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_13sdp"
             android:layout_below="@+id/imag_product"
             android:id="@+id/T_Name"
             android:maxLines="1"

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/_10sdp"
+    android:background="@drawable/bc_product">
+    <ImageView
+        android:layout_width="@dimen/_10sdp"
+        android:layout_height="@dimen/_10sdp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="@dimen/_7sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:src="@drawable/delete"
+        android:tint="#FFF"
+        android:id="@+id/img_delete"
+        />
+
+    <TextView
+        android:id="@+id/T_Minus"
+        android:layout_width="@dimen/_20sdp"
+        android:layout_height="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:text="-"
+        android:layout_toStartOf="@+id/T_Counter"
+        android:background="@drawable/circle"
+        android:textColor="#374c9b"
+        android:gravity="center"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:textSize="20sp"
+        android:layout_below="@+id/T_Name" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toStartOf="@+id/T_Plus"
+        android:text="1"
+        android:textSize="@dimen/_14sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:id="@+id/T_Counter"
+        android:layout_below="@+id/T_Name"
+        android:textColor="#fff"
+        android:layout_marginTop="@dimen/_30sdp"
+
+        />
+    <TextView
+        android:id="@+id/T_Plus"
+        android:layout_width="@dimen/_20sdp"
+        android:layout_height="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:text="+"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/circle"
+        android:textColor="#374c9b"
+        android:gravity="center"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:textSize="20sp"
+        android:layout_below="@+id/T_Name" />
+
+
+    <TextView
+        android:id="@+id/T_TotalPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_7sdp"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:text="TextView"
+        android:textColor="#fff"
+        android:textSize="15sp"
+        android:layout_below="@+id/T_Price"
+        android:layout_toEndOf="@+id/constraintLayout" />
+
+    <TextView
+        android:id="@+id/T_Price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:layout_marginTop="@dimen/_7sdp"
+        android:maxLines="2"
+        android:layout_below="@+id/T_Name"
+        android:layout_toEndOf="@+id/constraintLayout"
+        android:text="TextView"
+        android:textColor="#fff"
+        android:textSize="15sp"
+        />
+
+    <TextView
+        android:id="@+id/T_Name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:layout_toEndOf="@+id/constraintLayout"
+        android:text="TextView"
+        android:textColor="#fff"
+        android:textSize="15sp"
+        />
+
+    <RelativeLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="@dimen/_70sdp"
+        android:layout_height="@dimen/_80sdp"
+        android:background="@drawable/bc_drawableleft"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/Img_Product"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </RelativeLayout>
+</RelativeLayout>

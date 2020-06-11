@@ -52,9 +52,8 @@
                 android:layout_marginTop="@dimen/_5sdp"
                 android:background="@drawable/bc_txtcart"
                 android:padding="@dimen/_4sdp"
-                android:visibility="gone"
                 android:textColor="#ffff"
-                android:text="10"
+                android:text="0"
                 android:textStyle="bold"
                 android:textSize="@dimen/_6sdp"
                 />

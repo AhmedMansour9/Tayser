@@ -1,7 +1,10 @@
 package com.tayser.Fragments
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,10 +18,17 @@ import com.tayser.R
 import com.tayser.ViewModel.getProducts_ViewModel
 import kotlinx.android.synthetic.main.fragment_home.view.*
 import androidx.lifecycle.Observer
-import com.tayser.Model.Product_Response
-import com.tayser.Model.Sections_Response
+import androidx.preference.PreferenceManager
+import com.tayser.Model.*
 import com.tayser.View.ProductDetails_View
+import com.tayser.ViewModel.Cart_ViewModel
 import kotlinx.android.synthetic.main.fragment_products.view.*
+import kotlinx.android.synthetic.main.fragment_products.view.T_Title
+import kotlinx.android.synthetic.main.fragment_products.view.T_notification_numde
+import kotlinx.android.synthetic.main.fragment_sub_categories.view.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import java.util.*
 
 // TODO: Rename parameter arguments, choose names that match
@@ -35,6 +45,9 @@ class Products : Fragment(), ProductDetails_View {
     lateinit var root:View
     lateinit var categories: Sections_Response.Data
     var bundle=Bundle()
+    lateinit var allproducts: Cart_ViewModel
+    private lateinit var DataSaver: SharedPreferences
+    private var CartNumber = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,8 +55,16 @@ class Products : Fragment(), ProductDetails_View {
     ): View? {
         // Inflate the layout for this fragment
         root= inflater.inflate(R.layout.fragment_products, container, false)
+        DataSaver = PreferenceManager.getDefaultSharedPreferences(context!!.applicationContext)
+        allproducts = ViewModelProvider.NewInstanceFactory().create(
+            Cart_ViewModel::class.java)
+
         Selected_Tabs()
         getProducts("1")
+        CartNumber=0
+        getNumberOfCart()
+        getNumberCartService()
+        openCart()
         return root
     }
     fun getProducts(type:String){
@@ -116,5 +137,65 @@ class Products : Fragment(), ProductDetails_View {
 
     }
 
+    private fun openCart() {
+        root.Img_Cartt.setOnClickListener(){
+
+            var productsByid=tabs_cart()
+            val bundle = Bundle()
+            productsByid.arguments=bundle
+            activity!!.supportFragmentManager.beginTransaction().add(R.id.Rela_Home, productsByid)
+                .addToBackStack(null).commit()
+
+        }
+    }
+
+
+    @Subscribe(sticky = false, threadMode = ThreadMode.MAIN)
+    fun onMessageEvent( messsg: MessageEvent) {/* Do something */
+        Log.d("IGNORE", "Logging view to curb warnings: $messsg")
+        CartNumber=0
+        getNumberOfCart()
+        getNumberCartService()
+
+
+    };
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this)
+        }
+
+    }
+
+    fun getNumberOfCart(){
+        this.context!!.applicationContext?.let {
+            allproducts.getData(DataSaver.getString("token", null)!!,"en", it).observe(viewLifecycleOwner, Observer<Cart_Response> { loginmodel ->
+
+                if(loginmodel!=null) {
+                    CartNumber=CartNumber+loginmodel.data.list.size
+                    root.T_notification_numde.text=CartNumber.toString()
+                }else {
+                    CartNumber=0
+                    root.T_notification_numde.text=CartNumber.toString()
+
+                }
+
+            })
+        }
+
+    }
+    fun getNumberCartService(){
+        allproducts.getDataService(DataSaver.getString("token", null)!!,
+            ChangeLanguage.getLanguage(context!!.applicationContext), this.context!!.applicationContext)
+            .observe(viewLifecycleOwner, Observer<CartService_Response> { loginmodel ->
+                if(loginmodel!=null) {
+                    CartNumber=CartNumber+loginmodel.data!!.list!!.size
+                    root.T_notification_numde.text=CartNumber.toString()
+                }else {
+                    CartNumber=0
+                    root.T_notification_numde.text=CartNumber.toString()
+                }
+            })
+    }
 
 }

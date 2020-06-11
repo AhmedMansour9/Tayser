@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#fff"
+    tools:context=".Fragments.EditAddress">
+
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:id="@+id/toolbarr"
+        android:background="@color/blue">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/_16sdp"
+                android:textColor="#fff"
+                android:text="@string/address"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:id="@+id/T_Title"
+                />
+
+        </RelativeLayout>
+    </androidx.appcompat.widget.Toolbar>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_below="@+id/toolbarr"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/country"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:id="@+id/T_Country"
+        android:textColor="#a4a4a4"
+        android:layout_marginStart="@dimen/_15sdp"
+        />
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/_10sdp"
+        app:cardCornerRadius="@dimen/_5sdp"
+        app:cardElevation="2dp"
+        android:id="@+id/Card_Date"
+        android:layout_below="@+id/T_Country"
+        android:layout_marginStart="@dimen/_20sdp"
+        android:layout_marginEnd="@dimen/_20sdp"
+        android:layout_height="@dimen/_40sdp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Spinner
+                android:id="@+id/S_Country"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/city"
+        android:layout_below="@+id/Card_Date"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:id="@+id/T_City"
+        android:textColor="#a4a4a4"
+        android:layout_marginStart="@dimen/_15sdp"
+        />
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/_10sdp"
+        app:cardCornerRadius="@dimen/_5sdp"
+        app:cardElevation="2dp"
+        android:id="@+id/Card_city"
+        android:layout_below="@+id/T_City"
+        android:layout_marginStart="@dimen/_20sdp"
+        android:layout_marginEnd="@dimen/_20sdp"
+        android:layout_height="@dimen/_40sdp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Spinner
+                android:id="@+id/S_City"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
+        </RelativeLayout>
+ </androidx.cardview.widget.CardView>
+
+    <TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="@string/areaa"
+    android:layout_below="@+id/Card_city"
+    android:layout_marginTop="@dimen/_15sdp"
+    android:id="@+id/T_Area"
+    android:textColor="#a4a4a4"
+    android:layout_marginStart="@dimen/_15sdp"
+    />
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/_10sdp"
+        app:cardCornerRadius="@dimen/_5sdp"
+        app:cardElevation="2dp"
+        android:id="@+id/Card_area"
+        android:layout_below="@+id/T_Area"
+        android:layout_marginStart="@dimen/_20sdp"
+        android:layout_marginEnd="@dimen/_20sdp"
+        android:layout_height="@dimen/_40sdp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Spinner
+                android:id="@+id/S_Area"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/addr"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:id="@+id/T_Address"
+                android:textColor="#a4a4a4"
+                android:layout_below="@+id/Card_area"
+                android:layout_marginStart="@dimen/_15sdp"
+                />
+
+        <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/_10sdp"
+        app:cardCornerRadius="@dimen/_5sdp"
+        app:cardElevation="3dp"
+        android:id="@+id/Card_Address"
+        android:layout_below="@+id/T_Address"
+        android:layout_marginStart="@dimen/_20sdp"
+        android:layout_marginEnd="@dimen/_20sdp"
+        android:layout_height="@dimen/_40sdp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/E_Address"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:textColorHint="#a4a4a4"
+                android:textColor="#a4a4a4"
+                android:paddingStart="@dimen/_10sdp"
+                android:paddingEnd="@dimen/_30sdp"
+                />
+
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/phon"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:id="@+id/T_Phone"
+                android:textColor="#a4a4a4"
+                android:layout_below="@+id/Card_Address"
+                android:layout_marginStart="@dimen/_15sdp"
+                />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/_10sdp"
+                app:cardCornerRadius="@dimen/_5sdp"
+                app:cardElevation="3dp"
+                android:id="@+id/Card_Phone"
+                android:layout_below="@+id/T_Phone"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:layout_height="@dimen/_40sdp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/E_Phone"
+                        android:background="@null"
+                        android:gravity="center_vertical"
+                        android:textColorHint="#a4a4a4"
+                        android:inputType="phone"
+                        android:textColor="#a4a4a4"
+                        android:paddingStart="@dimen/_10sdp"
+                        android:paddingEnd="@dimen/_30sdp"
+                        />
+
+
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/b_number"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:id="@+id/T_Bnumber"
+                android:textColor="#a4a4a4"
+                android:layout_below="@+id/Card_Phone"
+                android:layout_marginStart="@dimen/_15sdp"
+                />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="@dimen/_120sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                app:cardCornerRadius="@dimen/_5sdp"
+                app:cardElevation="3dp"
+                android:id="@+id/Card_bnumber"
+                android:layout_below="@+id/T_Bnumber"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_height="@dimen/_40sdp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/E_BNumber"
+                        android:background="@null"
+                        android:gravity="center_vertical"
+                        android:textColorHint="#a4a4a4"
+                        android:inputType="number"
+                        android:textColor="#a4a4a4"
+                        android:paddingStart="@dimen/_10sdp"
+                        android:paddingEnd="@dimen/_30sdp"
+                        />
+
+
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/f_number"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_alignStart="@+id/Card_Fnumber"
+                android:id="@+id/T_fnumber"
+                android:textColor="#a4a4a4"
+                android:layout_below="@+id/Card_Phone"
+                />
+
+
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="@dimen/_120sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                app:cardCornerRadius="@dimen/_5sdp"
+                app:cardElevation="3dp"
+                android:layout_alignParentEnd="true"
+                android:id="@+id/Card_Fnumber"
+                android:layout_below="@+id/T_Bnumber"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:layout_height="@dimen/_40sdp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/E_fNumber"
+                        android:background="@null"
+                        android:gravity="center_vertical"
+                        android:textColorHint="#a4a4a4"
+                        android:inputType="number"
+                        android:textColor="#a4a4a4"
+                        android:paddingStart="@dimen/_10sdp"
+                        android:paddingEnd="@dimen/_30sdp"
+                        />
+
+
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/apartment"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:id="@+id/T_Apartment"
+                android:textColor="#a4a4a4"
+                android:layout_below="@+id/Card_bnumber"
+                android:layout_marginStart="@dimen/_15sdp"
+                />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="@dimen/_120sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                app:cardCornerRadius="@dimen/_5sdp"
+                app:cardElevation="3dp"
+                android:id="@+id/Card_apartment"
+                android:layout_below="@+id/T_Apartment"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_height="@dimen/_40sdp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/E_Apartment"
+                        android:background="@null"
+                        android:gravity="center_vertical"
+                        android:textColorHint="#a4a4a4"
+                        android:inputType="number"
+                        android:textColor="#a4a4a4"
+                        android:paddingStart="@dimen/_10sdp"
+                        android:paddingEnd="@dimen/_30sdp"
+                        />
+
+
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+        </RelativeLayout>
+    </ScrollView>
+
+</RelativeLayout>

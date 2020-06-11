@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit
 
 class ApiClient {
     companion object {
-        private val BasuRl: String = "http://atcs-egy.com/api/"
+        private val BasuRl: String = "https://atcs-egy.com/api/"
         val BASE_URL2 = "https://secure5.tranzila.com/cgi-bin/"
          var retrofi2: Retrofit? = null
 

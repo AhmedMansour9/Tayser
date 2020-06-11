@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#f6f4f5"
+    android:id="@+id/Rela_CartSer"
+    tools:context=".Fragments.Cart">
+
+
+
+      <ScrollView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content">
+          <RelativeLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+
+
+
+
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/SwipCart"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_360sdp"
+
+        android:layout_marginStart="@dimen/_20sdp"
+        android:layout_marginEnd="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_10sdp">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_Cart"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_360sdp"
+            android:visibility="gone"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:scrollbars="horizontal" />
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
+              <Button
+                  android:layout_width="@dimen/_160sdp"
+                  android:layout_height="@dimen/_32sdp"
+                  android:layout_below="@+id/SwipCart"
+                  android:layout_centerHorizontal="true"
+                  android:text="@string/checkout"
+                  android:textAllCaps="false"
+                  android:visibility="gone"
+                  android:id="@+id/Btn_Checkout"
+                  android:textColor="#fff"
+                  android:background="@drawable/bc_buttonlogin"
+                  android:layout_marginTop="@dimen/_35sdp"
+                  />
+
+              <TextView
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_alignParentEnd="true"
+                  android:textColor="#374c9b"
+                  android:visibility="gone"
+                  android:layout_marginEnd="@dimen/_20sdp"
+                  android:layout_below="@+id/Btn_Checkout"
+                  android:textSize="@dimen/_13sdp"
+                  android:layout_marginTop="@dimen/_20sdp"
+                  android:id="@+id/T_Total"
+                  />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="@string/nocartproduct"
+        android:textColor="#374c9b"
+        android:visibility="gone"
+        android:textSize="@dimen/_16sdp"
+        android:id="@+id/T_NoCart"
+        />
+
+          </RelativeLayout>
+      </ScrollView>
+
+</RelativeLayout>

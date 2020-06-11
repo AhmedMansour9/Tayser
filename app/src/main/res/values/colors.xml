@@ -6,5 +6,10 @@
 
     <color name="darkred">#224488</color>
     <color name="darkwhite">#c4c4c4</color>
+    <color name="blue">#224488</color>
+    <color name="grey_10">#e6e6e6</color>
+    <color name="grey_90">#263238</color>
+    <color name="light_green_700">#689F38</color>
+    <color name="grey_5">#f2f2f2</color>
 
 </resources>

@@ -8,13 +8,15 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.tayser.ItemAnimation
 import com.tayser.Model.Sections_Response
 import com.tayser.R
 import com.tayser.View.ProductBytUd_View
 
-class Categories_Adapter (context: Context, val userList: List<Sections_Response.Data>)
+class Categories_Adapter (context: Context, val userList: List<Sections_Response.Data>,animation_type:Int)
     : RecyclerView.Adapter<Categories_Adapter.ViewHolder>() {
     lateinit var productbyid: ProductBytUd_View
+    var animation_typ=animation_type
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -29,6 +31,9 @@ class Categories_Adapter (context: Context, val userList: List<Sections_Response
         holder.itemView.setOnClickListener(){
            this.productbyid.Id(userList.get(position))
         }
+
+        setAnimation(holder.itemView, position)
+
     }
 
     //this method is giving the size of the list
@@ -51,6 +56,16 @@ class Categories_Adapter (context: Context, val userList: List<Sections_Response
             Glide.with(context)
                 .load("http://atcs-egy.com" + dataModel.image)
                 .into(img)
+        }
+    }
+
+    private fun setAnimation(view: View, position: Int) {
+        var lastPosition = -1
+        val on_attach = true
+
+        if (position > lastPosition) {
+            ItemAnimation.animate(view, if (on_attach) position else -1, animation_typ)
+            lastPosition = position
         }
     }
 }

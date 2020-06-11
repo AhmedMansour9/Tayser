@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bottom_sheet"
+    android:background="@drawable/bc_reduistop"
+    android:orientation="vertical"
+    app:behavior_hideable="true"
+    app:behavior_peekHeight="0dp"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+    >
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:textColor="#2d4328"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:id="@+id/T_Type"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content"
+        android:text="@string/type_service"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:textColor="#7d8b7a"
+        android:id="@+id/T_Done"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="@dimen/_20sdp"
+        android:layout_height="wrap_content"
+        android:text="@string/done"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_Services"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/T_Type"
+        android:layout_marginBottom="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_20sdp"
+        android:layout_marginEnd="@dimen/_20sdp"
+        android:scrollbars="horizontal" />
+
+
+
+
+</RelativeLayout>

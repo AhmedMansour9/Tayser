@@ -37,4 +37,41 @@
     <string name="addtocart">Add To Cart</string>
     <string name="confirm">Confirm</string>
     <string name="total">Total Price: </string>
+    <string name="nocartproduct">No Product Found in your Cart</string>
+    <string name="checkout">Check Out</string>
+    <string name="price">Price</string>
+    <string name="cart">Cart</string>
+    <string name="type_service">Service Type</string>
+    <string name="description">Maintenance Description</string>
+    <string name="choose_Date">Select Date&amp;Time</string>
+    <string name="done">Done</string>
+    <string name="selectservice">You Should Select Service First</string>
+    <string name="services">Services</string>
+    <string name="delete_post">Do You want to delete this Item ?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="area">The area of the apartment</string>
+    <string name="n_room">Number Of Room</string>
+    <string name="floor">Floor</string>
+    <string name="notes">Notes</string>
+    <string name="request_prev">Request apreview</string>
+    <string name="photos">Apartment photos</string>
+    <string name="add_address">Add Address</string>
+    <string name="change_address">Change Address</string>
+    <string name="request_estab">Request Establish</string>
+    <string name="chhose">Choose</string>
+    <string name="selectphoto">Select photo from gallery</string>
+    <string name="selectcamera">Capture photo from camera</string>
+    <string name="no_defaddres">No Defult Address </string>
+    <string name="address">Address</string>
+    <string name="country">Country :</string>
+    <string name="areaa">Area :</string>
+    <string name="cityy">City :</string>
+    <string name="addr">Address :</string>
+    <string name="phon">Phone :</string>
+    <string name="b_number">Building no :</string>
+    <string name="f_number">Floor no :</string>
+    <string name="apartment">Apartment no :</string>
+
+
 </resources>

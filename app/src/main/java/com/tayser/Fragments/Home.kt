@@ -1,8 +1,11 @@
 package com.tayser.Fragments
 
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,20 +13,29 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import com.tayser.Adapter.Slider_Adapter
 import com.tayser.ChangeLanguage
-import com.tayser.Model.SliderHome_Model
 import androidx.lifecycle.Observer
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.tayser.Adapter.Categories_Adapter
-import com.tayser.Model.Sections_Response
+import com.tayser.Adapter.ServicesCart_Adapter
+import com.tayser.ItemAnimation
+import com.tayser.Model.*
 
 import com.tayser.R
 import com.tayser.View.ProductBytUd_View
+import com.tayser.ViewModel.Cart_ViewModel
 import com.tayser.ViewModel.Sections_ViewModel
 import com.tayser.ViewModel.SliderHome_ViewModel
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.view.*
 import kotlinx.android.synthetic.main.fragment_home.view.viewPager
+import kotlinx.android.synthetic.main.fragment_maintenence__service.*
+import kotlinx.android.synthetic.main.fragment_services.view.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import java.util.*
 
 /**
@@ -33,10 +45,14 @@ class Home : Fragment() , SwipeRefreshLayout.OnRefreshListener, ProductBytUd_Vie
     override fun onRefresh() {
         getSlider()
         getAllCategories()
+        CartNumber=0
+        getNumberOfCart()
+        getNumberCartService()
     }
 
     lateinit var root:View
     var swipeTimer: Timer?=null
+    private lateinit var DataSaver: SharedPreferences
     val handler = Handler()
     val Update = Runnable {
         if (currentPage == NUM_PAGES) {
@@ -44,20 +60,66 @@ class Home : Fragment() , SwipeRefreshLayout.OnRefreshListener, ProductBytUd_Vie
         }
         root.viewPager!!.setCurrentItem(currentPage++, true)
     }
+    private var CartNumber = 0
     private var currentPage = 0
     private var NUM_PAGES = 0
+    lateinit var allproducts: Cart_ViewModel
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         root= inflater.inflate(R.layout.fragment_home, container, false)
-        SwipRefresh()
+        DataSaver = PreferenceManager.getDefaultSharedPreferences(context!!.applicationContext)
+        allproducts = ViewModelProvider.NewInstanceFactory().create(
+            Cart_ViewModel::class.java)
 
+        SwipRefresh()
+        openCart()
         return root
     }
+    private fun openCart() {
+        root.Img_Cart.setOnClickListener(){
 
+            var productsByid=tabs_cart()
+            val bundle = Bundle()
+            productsByid.arguments=bundle
+            activity!!.supportFragmentManager.beginTransaction().add(R.id.Rela_Home, productsByid)
+                .addToBackStack(null).commit()
 
+        }
+    }
+
+    fun getNumberOfCart(){
+        this.context!!.applicationContext?.let {
+            allproducts.getData(DataSaver.getString("token", null)!!,"en", it).observe(viewLifecycleOwner, Observer<Cart_Response> { loginmodel ->
+
+                if(loginmodel!=null) {
+                    CartNumber=CartNumber+loginmodel.data.list.size
+                    root.T_notification_numdetai.text=CartNumber.toString()
+                }else {
+                    CartNumber=0
+                    root.T_notification_numdetai.text=CartNumber.toString()
+
+                }
+
+            })
+        }
+
+    }
+    fun getNumberCartService(){
+        allproducts.getDataService(DataSaver.getString("token", null)!!,
+            ChangeLanguage.getLanguage(context!!.applicationContext), this.context!!.applicationContext)
+            .observe(viewLifecycleOwner, Observer<CartService_Response> { loginmodel ->
+                if(loginmodel!=null) {
+                    CartNumber=CartNumber+loginmodel.data!!.list!!.size
+                    root.T_notification_numdetai.text=CartNumber.toString()
+                }else {
+                    CartNumber=0
+                    root.T_notification_numdetai.text=CartNumber.toString()
+                }
+    })
+}
     fun SwipRefresh(){
         root.SwipHome.setOnRefreshListener(this)
         root.SwipHome.isRefreshing=true
@@ -69,7 +131,9 @@ class Home : Fragment() , SwipeRefreshLayout.OnRefreshListener, ProductBytUd_Vie
             android.R.color.holo_blue_dark
         )
         root.SwipHome.post(Runnable {
-
+            CartNumber=0
+            getNumberOfCart()
+            getNumberCartService()
             getSlider()
             getAllCategories()
         })
@@ -117,6 +181,7 @@ class Home : Fragment() , SwipeRefreshLayout.OnRefreshListener, ProductBytUd_Vie
                             Categories_Adapter(
                                 context!!.applicationContext,
                                 loginmodel.data!! as List<Sections_Response.Data>
+                            ,ItemAnimation.FADE_IN
                             )
                     listAdapter.onClick(this)
                         root.recycler_Categories.setLayoutManager(
@@ -140,6 +205,22 @@ class Home : Fragment() , SwipeRefreshLayout.OnRefreshListener, ProductBytUd_Vie
             .addToBackStack(null).commit()
     }
 
+    @Subscribe(sticky = false, threadMode = ThreadMode.MAIN)
+    fun onMessageEvent( messsg: MessageEvent) {/* Do something */
+        Log.d("IGNORE", "Logging view to curb warnings: $messsg")
+        CartNumber=0
+        getNumberOfCart()
+        getNumberCartService()
+
+
+    };
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this)
+        }
+
+    }
 
 
 }

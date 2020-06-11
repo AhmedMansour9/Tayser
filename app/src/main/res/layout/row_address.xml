@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginTop="@dimen/_15sdp"
+    app:cardCornerRadius="@dimen/_5sdp"
+    app:cardElevation="1dp"
+    android:id="@+id/Card_Products"
+    android:layout_below="@+id/view_pager_circle_indicators"
+    android:layout_marginStart="@dimen/_10sdp"
+    android:layout_marginEnd="@dimen/_10sdp"
+    android:layout_height="@dimen/_120sdp">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+  <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/country"
+      android:id="@+id/country"
+    android:textColor="#000"
+    android:layout_marginTop="@dimen/_15sdp"
+    android:layout_marginStart="@dimen/_20sdp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/country"
+        android:id="@+id/T_country"
+        android:textColor="@color/blue"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:layout_marginStart="@dimen/_10sdp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/cityy"
+        android:textColor="#000"
+        android:id="@+id/city"
+        android:layout_below="@+id/country"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginStart="@dimen/_20sdp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/country"
+        android:id="@+id/T_City"
+        android:layout_below="@+id/country"
+        android:textColor="@color/blue"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginStart="@dimen/_10sdp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/areaa"
+        android:id="@+id/areaa"
+        android:textColor="#000"
+        android:layout_below="@+id/city"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginStart="@dimen/_20sdp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/country"
+        android:id="@+id/T_Area"
+        android:layout_below="@+id/city"
+        android:textColor="@color/blue"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginStart="@dimen/_10sdp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/addr"
+        android:textColor="#000"
+        android:layout_below="@+id/areaa"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginStart="@dimen/_20sdp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/country"
+        android:id="@+id/T_Address"
+        android:layout_below="@+id/areaa"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginStart="@dimen/_10sdp"/>
+
+</RelativeLayout>
+</androidx.cardview.widget.CardView>

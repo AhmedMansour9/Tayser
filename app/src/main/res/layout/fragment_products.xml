@@ -33,6 +33,30 @@
                 android:layout_centerVertical="true"
                 android:id="@+id/T_Title"
                 />
+            <ImageView
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:src="@drawable/ic_homecart"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:id="@+id/Img_Cartt"
+                android:layout_marginEnd="@dimen/_20sdp"
+                />
+
+            <TextView
+                android:id="@+id/T_notification_numde"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="18dp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@drawable/bc_txtcart"
+                android:padding="@dimen/_4sdp"
+                android:textColor="#ffff"
+                android:text="0"
+                android:textStyle="bold"
+                android:textSize="@dimen/_6sdp"
+                />
 
 
 
