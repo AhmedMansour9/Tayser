@@ -1,5 +1,7 @@
-package com.tayser
+package com.tayser.utils
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.view.View
@@ -22,13 +24,43 @@ class ItemAnimation {
 
         fun animate(view: View, position: Int, type: Int) {
             when (type) {
-                FADE_IN -> animateFadeIn(view, position)
-                LEFT_RIGHT -> animateLeftRight(view, position)
-                RIGHT_LEFT -> animateRightLeft(view, position)
+                FADE_IN -> animateFadeIn(
+                    view,
+                    position
+                )
+                LEFT_RIGHT -> animateLeftRight(
+                    view,
+                    position
+                )
+                RIGHT_LEFT -> animateRightLeft(
+                    view,
+                    position
+                )
             }
         }
 
-
+       fun fadeOut(v: View) {
+           fadeOut(v, null)
+       }
+       interface AnimListener {
+           fun onFinish()
+       }
+       fun fadeOut(
+           v: View,
+           animListener: AnimListener?
+       ) {
+           v.alpha = 1.0f
+           // Prepare the View for the animation
+           v.animate()
+               .setDuration(500)
+               .setListener(object : AnimatorListenerAdapter() {
+                   override fun onAnimationEnd(animation: Animator) {
+                       if (animListener != null) animListener.onFinish()
+                       super.onAnimationEnd(animation)
+                   }
+               })
+               .alpha(0.0f)
+       }
 
     private fun animateFadeIn(view: View, position: Int) {
         var position = position
@@ -40,7 +72,8 @@ class ItemAnimation {
         ObjectAnimator.ofFloat(view, "alpha", 0f).start()
         animatorAlpha.startDelay =
             if (not_first_item) DURATION_IN_FADE_ID / 2 else position * DURATION_IN_FADE_ID / 3
-        animatorAlpha.duration = DURATION_IN_FADE_ID
+        animatorAlpha.duration =
+            DURATION_IN_FADE_ID
         animatorSet.play(animatorAlpha)
         animatorSet.start()
     }

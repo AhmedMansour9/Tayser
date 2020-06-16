@@ -5,8 +5,10 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.view.animation.AnimationUtils
 import androidx.preference.PreferenceManager
 import com.tayser.R
+import kotlinx.android.synthetic.main.activity_splash.*
 
 class Splash : AppCompatActivity() {
     private lateinit var DataSaver: SharedPreferences
@@ -16,9 +18,9 @@ class Splash : AppCompatActivity() {
         setContentView(R.layout.activity_splash)
 
         DataSaver= PreferenceManager.getDefaultSharedPreferences(this)
+        val animation = AnimationUtils.loadAnimation(this, R.anim.fade_in)
+        Img_logo.startAnimation(animation)
 
-//        val animation = AnimationUtils.loadAnimation(this, R.anim.fade_in)
-//        Img_logo.startAnimation(animation)
 
         Handler().postDelayed({
             val UserToken: String? =DataSaver.getString("token",null);
@@ -31,7 +33,7 @@ class Splash : AppCompatActivity() {
                 startActivity(intent)
                 finish()
             }
-        }, 4500)
+        }, 3000)
 
 
     }

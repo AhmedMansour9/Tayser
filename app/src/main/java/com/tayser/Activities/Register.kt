@@ -8,14 +8,16 @@ import android.os.Bundle
 import android.util.Patterns
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
-import com.tayser.ChangeLanguage
+import com.tayser.Loading
+import com.tayser.utils.ChangeLanguage
+import com.tayser.utils.CustomToast
 import com.tayser.Model.Register_Model
 import com.tayser.R
 import com.tayser.ViewModel.Register_ViewModel
+import com.tayser.utils.NetworkCheck
 import kotlinx.android.synthetic.main.activity_register.*
 import java.util.regex.Pattern
 
@@ -32,6 +34,9 @@ class Register : AppCompatActivity() {
     )
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if(!NetworkCheck.isConnect(this)) {
+            startActivity(Intent(this, NoItemInternetImage::class.java))
+        }
         setContentView(R.layout.activity_register)
         getLanguage()
         getUserToken()
@@ -60,7 +65,8 @@ class Register : AppCompatActivity() {
 
         var RegisterViewModel =
             ViewModelProvider.NewInstanceFactory().create(Register_ViewModel::class.java)
-        progressBarRegister.visibility = View.VISIBLE
+        Loading.Show(this)
+
         view.isEnabled = false
         view.hideKeyboard()
         RegisterViewModel.getData(
@@ -72,11 +78,13 @@ class Register : AppCompatActivity() {
         ).observe(this,
             Observer<Register_Model> { loginmodel ->
                 view.isEnabled = true
-                progressBarRegister.visibility = View.GONE
+               Loading.Disable()
                 if (loginmodel != null) {
                     val customer_id = loginmodel.data.userToken
                     dataSaver.edit().putString("token", customer_id).apply()
                     val intent = Intent(this, MainActivity::class.java)
+                    CustomToast.toastIconSuccess(applicationContext.getString(R.string.success)+" "+loginmodel.data.name
+                        ,this)
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                     startActivity(intent)
                     finish()
@@ -85,11 +93,9 @@ class Register : AppCompatActivity() {
                     if (status == true) {
                         val status: Boolean = RegisterViewModel.getStatus()
                         if (status == true) {
-                            Toast.makeText(
-                                applicationContext,
-                                applicationContext.getString(R.string.wrongemailorpass),
-                                Toast.LENGTH_LONG
-                            ).show()
+
+                            CustomToast.toastIconError(applicationContext.getString(R.string.email_used)
+                            ,this)
                         }
 
                     }

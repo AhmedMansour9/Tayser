@@ -17,15 +17,11 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
-import android.text.method.ScrollingMovementMethod
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ScrollView
-import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -34,18 +30,24 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
+import com.tayser.Activities.NoItemInternetImage
 import com.tayser.Adapter.Services_Adapter
-import com.tayser.ChangeLanguage
+import com.tayser.Loading
+import com.tayser.utils.ChangeLanguage
+import com.tayser.utils.CustomToast
 import com.tayser.Model.*
 import com.tayser.R
 import com.tayser.ViewModel.*
+import com.tayser.utils.NetworkCheck
 import kotlinx.android.synthetic.main.bottomsheet_service.view.*
+import kotlinx.android.synthetic.main.fragment_add_address.view.*
 import kotlinx.android.synthetic.main.fragment_maintenence__service.view.*
+import kotlinx.android.synthetic.main.fragment_maintenence__service.view.T_Area
 import kotlinx.android.synthetic.main.fragment_maintenence__service.view.T_Establish
 import kotlinx.android.synthetic.main.fragment_maintenence__service.view.T_Mainten
-import kotlinx.android.synthetic.main.fragment_products.view.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -83,19 +85,15 @@ class Maintenence_Service : Fragment() {
     var REQUEST_WRITE_PERMISSION:Int=786
 
     private lateinit var recycler_Services:RecyclerView
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+
     lateinit var root:View
     lateinit var categories: Sections_Response.Data
     var bundle=Bundle()
     private lateinit var DataSaver: SharedPreferences
     var ServiceId:String?= String()
     var Service: String? =null
+    var AddressId: String? =null
+    var request_preview: String? =null
     lateinit var date: Calendar
     lateinit var allproducts: Cart_ViewModel
     private var CartNumber = 0
@@ -125,9 +123,74 @@ class Maintenence_Service : Fragment() {
         GetDate()
         getAddresses()
         openAddress()
+        Send_Request()
         return root
     }
+    private fun Send_Request() {
+        root.Btn_RequestEstablish.setOnClickListener() {
+            var RequestViewModel = ViewModelProvider.NewInstanceFactory().create(
+                AddMessage_ViewModel::class.java
+            )
+            if(!NetworkCheck.isConnect(context!!.applicationContext)) {
+                startActivity(Intent(context!!.applicationContext, NoItemInternetImage::class.java))
+            }
+            if (!ValidatAddress() or !ValidateArea() or !ValidateBNumber() or !ValidateFloorNum()) {
+                return@setOnClickListener
+            }
+            if (file.toString().equals("")) {
+                file = null
+            }
+            if (file2.toString().equals("")) {
+                file2 = null
+            }
+            if (file3.toString().equals("")) {
+            file3 = null
+        }
+            if (file4.toString().equals("")) {
+                file4 = null
+            }
 
+            if(root.CheckBox.isChecked){
+                request_preview="1"
+            }else {
+                request_preview="0"
+
+            }
+
+
+            root.Btn_RequestEstablish.isEnabled = false
+            Loading.Show(context!!)
+            RequestViewModel.getData(
+                file,
+                file2,
+                file3,
+                file4,
+                categories.id.toString(),
+                AddressId!!,
+                request_preview!!,
+                root.T_Area.text.toString(),
+                root.T_Floor.text.toString(),
+                root.T_EstaDescription.text.toString(),
+                root.T_Number.text.toString(),
+                DataSaver.getString("token", null)!!,
+                context!!.applicationContext
+            ).observe(this,
+                Observer<AddAdress_Response> { loginmodel ->
+                    root.Btn_RequestEstablish.isEnabled = true
+                    Loading.Disable()
+                    if (loginmodel != null) {
+                        activity?.let { it1 ->
+                            CustomToast.toastIconSuccess(loginmodel.data!!
+                                , it1
+                            )
+                        }
+                    } else {
+
+                    }
+                })
+
+        }
+    }
     private fun Done() {
         root.T_Done.setOnClickListener(){
             ServiceId=""
@@ -146,10 +209,6 @@ class Maintenence_Service : Fragment() {
             }
             root.T_Services.setText(Service)
             mBehavior!!.state=BottomSheetBehavior.STATE_COLLAPSED
-//            root.T_Services.setMovementMethod(ScrollingMovementMethod())
-
-//            val scroller = ScrollView(context)
-//            scroller.addView(root.T_Services)
 
         }
 
@@ -157,9 +216,9 @@ class Maintenence_Service : Fragment() {
 
     fun AddToCart(){
         root.Btn_AddToCart.setOnClickListener(){
-
+         checkNetwork()
             if(!Service.isNullOrEmpty()) {
-                root.prograss_cart.visibility = View.VISIBLE
+                Loading.Show(this.context!!)
                 var addtocart: AddToCart_ViewModel = ViewModelProvider.NewInstanceFactory().create(
                     AddToCart_ViewModel::class.java  )
                 this.context!!.applicationContext?.let {
@@ -168,14 +227,15 @@ class Maintenence_Service : Fragment() {
                         , root.T_Description.text.toString(), it
                     )
                         .observe(this, Observer<AddToCart_Response> { loginmodel ->
-                            root.prograss_cart.visibility = View.GONE
+                            Loading.Disable()
                             EventBus.getDefault().postSticky(MessageEvent("cart"))
                             if (loginmodel != null) {
-                                Toast.makeText(
-                                    context!!.applicationContext,
-                                    loginmodel.data,
-                                    Toast.LENGTH_SHORT
-                                ).show()
+
+                                activity?.let { it1 ->
+                                    CustomToast.toastIconSuccess(loginmodel.data
+                                        , it1
+                                    )
+                                }
                             }
 
                         })
@@ -298,11 +358,13 @@ class Maintenence_Service : Fragment() {
         var Sizes: GetAddress_ViewModel =  ViewModelProvider.NewInstanceFactory().create(
             GetAddress_ViewModel::class.java)
         this.context!!.applicationContext?.let {
-            Sizes.getData( DataSaver.getString("token", null)!!,ChangeLanguage.getLanguage(context!!.applicationContext), it).observe(viewLifecycleOwner, Observer<ListAddress_Response> { loginmodel ->
+            Sizes.getData( DataSaver.getString("token", null)!!,
+                ChangeLanguage.getLanguage(context!!.applicationContext), it).observe(viewLifecycleOwner, Observer<ListAddress_Response> { loginmodel ->
                 if(loginmodel!=null) {
                     root.T_ChangeAddress.text=resources.getString(R.string.change_address)
                     loginmodel.data!!.forEachIndexed { index, element ->
                     if(loginmodel.data!!.get(index)!!.activate.equals("1")){
+                        AddressId=loginmodel.data!!.get(index)!!.id.toString()
                         root.T_address.text=loginmodel.data!!.get(index)!!.country+","+
                                 loginmodel.data!!.get(index)!!.city+","+
                                 loginmodel.data!!.get(index)!!.address
@@ -310,6 +372,8 @@ class Maintenence_Service : Fragment() {
                     }
                     if(root.T_address.text.isNullOrEmpty()){
                         root.T_address.text=resources.getString(R.string.no_defaddres)
+                        root.T_ChangeAddress.text=resources.getString(R.string.change_address)
+
                     }
 
                 }else {
@@ -375,57 +439,18 @@ class Maintenence_Service : Fragment() {
         }
     }
 
-//    private fun Send_Request() {
-//        root.Btn_RequestEstablish.setOnClickListener(){
-//                var RequestViewModel =  ViewModelProvider.NewInstanceFactory().create(
-//                    AddMessage_ViewModel::class.java)
-////                progressBarLogin.visibility= View.VISIBLE
-//                if(!E_Messages.text.toString().isEmpty()) {
-//                    Btn_Sent.isEnabled=false
-//                    Btn_Sent.hideKeyboard()
-//                    if(file.toString().equals("")){
-//                        file=null
-//                    }
-//
-//                    RequestViewModel.getData(
-//                        file,
-//                        E_Messages.text.toString(),
-//                        shop_id,
-//                        UserToken,
-//                        applicationContext
-//                    ).observe(this,
-//                        Observer<SentMessage_Response> { loginmodel ->
-//                            Btn_Sent.isEnabled = true
-//                            progressBarLogin.visibility = View.GONE
-//                            if (loginmodel != null) {
-//                                Toast.makeText(
-//                                    this,
-//                                    resources.getString(R.string.requestsent),
-//                                    Toast.LENGTH_LONG
-//                                ).show()
-//                            } else {
-//
-//                            }
-//                        })
-//                }else{
-//                    Toast.makeText(this,"Please Make Sure that you Enter description", Toast.LENGTH_LONG).show()
-//
-//                }
-//
-//
-//        }
-//    }
+
 
     private fun openAddress() {
-        root.T_ChangeAddress.setOnClickListener(){
+            root.T_ChangeAddress.setOnClickListener() {
+                    var productsByid = Address()
+                    val bundle = Bundle()
+                    productsByid.arguments = bundle
+                    activity!!.supportFragmentManager.beginTransaction()
+                        .add(R.id.Rela_Home, productsByid)
+                        .addToBackStack(null).commit()
 
-            var productsByid=Address()
-            val bundle = Bundle()
-            productsByid.arguments=bundle
-            activity!!.supportFragmentManager.beginTransaction().add(R.id.Rela_Home, productsByid)
-                .addToBackStack(null).commit()
-
-        }
+            }
     }
 
 
@@ -435,11 +460,12 @@ class Maintenence_Service : Fragment() {
         CartNumber=0
         getNumberOfCart()
         getNumberCartService()
-
+         getAddresses()
 
     };
     override fun onAttach(context: Context) {
         super.onAttach(context)
+        checkNetwork()
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this)
         }
@@ -480,7 +506,7 @@ class Maintenence_Service : Fragment() {
 
 
 
-    public override fun onActivityResult(requestCode:Int, resultCode:Int, data: Intent?) {
+     override fun onActivityResult(requestCode:Int, resultCode:Int, data: Intent?) {
 
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -497,8 +523,10 @@ class Maintenence_Service : Fragment() {
                 {
                     val bitmap = MediaStore.Images.Media.getBitmap(context!!.contentResolver, contentURI)
                     val path = saveImage(bitmap)
-                    root.Img_1!!.setImageBitmap(bitmap)
+                    Glide.with(context!!.applicationContext).load(file).into(root.Img_1);
+
                     root.Img_Addphoto1.visibility=View.GONE
+
                 }
                 catch (e: IOException) {
                     e.printStackTrace()
@@ -520,8 +548,10 @@ class Maintenence_Service : Fragment() {
                 {
                     val bitmap = MediaStore.Images.Media.getBitmap(context!!.contentResolver, contentURI)
                     val path = saveImage(bitmap)
-                    root.Img_2!!.setImageBitmap(bitmap)
+                    Glide.with(context!!.applicationContext).load(file2).into(root.Img_2);
+
                     root.Img_Addphoto2.visibility=View.GONE
+
                 }
                 catch (e: IOException) {
                     e.printStackTrace()
@@ -543,8 +573,9 @@ class Maintenence_Service : Fragment() {
                 {
                     val bitmap = MediaStore.Images.Media.getBitmap(context!!.contentResolver, contentURI)
                     val path = saveImage(bitmap)
-                    root.Img_3!!.setImageBitmap(bitmap)
+                    Glide.with(context!!.applicationContext).load(file3).into(root.Img_3);
                     root.Img_Addphoto3.visibility=View.GONE
+
                 }
                 catch (e: IOException) {
                     e.printStackTrace()
@@ -566,7 +597,7 @@ class Maintenence_Service : Fragment() {
                 {
                     val bitmap = MediaStore.Images.Media.getBitmap(context!!.contentResolver, contentURI)
                     val path = saveImage(bitmap)
-                    root.Img_4!!.setImageBitmap(bitmap)
+                    Glide.with(context!!.applicationContext).load(file4).into(root.Img_4);
                     root.Img_Addphoto4.visibility=View.GONE
                 }
                 catch (e: IOException) {
@@ -606,7 +637,7 @@ class Maintenence_Service : Fragment() {
     }
 
     private fun Second_Image() {
-        root.Img_Addphoto1.setOnClickListener(){
+        root.Img_Addphoto2.setOnClickListener(){
             val permission = ContextCompat.checkSelfPermission(context!!,
                 Manifest.permission.READ_EXTERNAL_STORAGE)
 
@@ -620,7 +651,7 @@ class Maintenence_Service : Fragment() {
         }
     }
     private fun Third_Image() {
-        root.Img_Addphoto1.setOnClickListener(){
+        root.Img_Addphoto3.setOnClickListener(){
             val permission = ContextCompat.checkSelfPermission(context!!,
                 Manifest.permission.READ_EXTERNAL_STORAGE)
 
@@ -660,6 +691,8 @@ class Maintenence_Service : Fragment() {
             arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE),
             REQUEST_WRITE_PERMISSION)
     }
+
+
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -670,6 +703,7 @@ class Maintenence_Service : Fragment() {
             REQUEST_WRITE_PERMISSION -> {
 
                 if (grantResults.isEmpty() || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+
                 } else {
                     choosePhotoFromGallary(GALLERY)
                 }
@@ -725,5 +759,61 @@ class Maintenence_Service : Fragment() {
         private val IMAGE_DIRECTORY = "/demonuts"
     }
 
+    fun checkNetwork(){
+        if(!NetworkCheck.isConnect(context!!.applicationContext)) {
+            startActivity(Intent(context!!.applicationContext, NoItemInternetImage::class.java))
+        }
+
+    }
+
+    private fun ValidateBNumber():Boolean{
+        val Fullname=root.T_Number.text.toString()
+        if(Fullname.isEmpty()){
+            root.T_Number.error=resources.getString(R.string.feildempty)
+            return false
+        }
+        else {
+            root.T_Number.error=null
+            return true
+        }
+    }
+
+    private fun ValidateFloorNum():Boolean{
+        val Fullname=root.T_Floor.text.toString()
+        if(Fullname.isEmpty()){
+            root.T_Floor.error=resources.getString(R.string.feildempty)
+            return false
+        }
+        else {
+            root.T_Floor.error=null
+            return true
+        }
+    }
+
+    private fun ValidateArea():Boolean{
+        val Fullname=root.T_Area.text.toString()
+        if(Fullname.isEmpty()){
+            root.T_Area.error=resources.getString(R.string.feildempty)
+            return false
+        }
+        else {
+            root.T_Area.error=null
+            return true
+        }
+    }
+    private fun ValidatAddress():Boolean{
+        if(AddressId.isNullOrEmpty()){
+            activity?.let { it1 ->
+                CustomToast.toastIconError(resources.getString(R.string.noaddresss)!!
+                    , it1
+                )
+            }
+            return false
+        }
+        else {
+
+            return true
+        }
+    }
 
 }

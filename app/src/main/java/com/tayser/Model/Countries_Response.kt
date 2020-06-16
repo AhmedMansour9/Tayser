@@ -1,6 +1,7 @@
 package com.tayser.Model
 
 
+import android.annotation.SuppressLint
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 import android.os.Parcelable
@@ -21,6 +22,9 @@ data class Countries_Response(
         @SerializedName("id")
         var id: Int?,
         @SerializedName("title")
-        var title: String?
+        var title: String?,
+        @SerializedName("price")
+        var price: String?
+
     ) : Parcelable
 }

@@ -13,19 +13,18 @@ import androidx.core.view.ViewCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tayser.Adapter.Products_Adapter
-import com.tayser.ChangeLanguage
+import com.tayser.utils.ChangeLanguage
 import com.tayser.R
 import com.tayser.ViewModel.getProducts_ViewModel
-import kotlinx.android.synthetic.main.fragment_home.view.*
 import androidx.lifecycle.Observer
 import androidx.preference.PreferenceManager
+import com.tayser.Loading
 import com.tayser.Model.*
 import com.tayser.View.ProductDetails_View
 import com.tayser.ViewModel.Cart_ViewModel
 import kotlinx.android.synthetic.main.fragment_products.view.*
 import kotlinx.android.synthetic.main.fragment_products.view.T_Title
 import kotlinx.android.synthetic.main.fragment_products.view.T_notification_numde
-import kotlinx.android.synthetic.main.fragment_sub_categories.view.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -71,11 +70,14 @@ class Products : Fragment(), ProductDetails_View {
         bundle = this.arguments!!
         categories= bundle.getParcelable("CategoryItem")!!
         root.T_Title.text=categories.title
+        Loading.Show(context!!)
         var allproducts: getProducts_ViewModel =  ViewModelProvider.NewInstanceFactory().create(
             getProducts_ViewModel::class.java)
         this.context!!.applicationContext?.let {
-            allproducts.getProducts(categories.id.toString(),ChangeLanguage.getLanguage(it),type, it)
+            allproducts.getProducts(categories.id.toString(),
+                ChangeLanguage.getLanguage(it),type, it)
                 .observe(viewLifecycleOwner, Observer<Product_Response> { loginmodel ->
+                    Loading.Disable()
                 if(loginmodel!=null) {
                     root.recycler_Products.visibility=View.VISIBLE
                     Collections.reverse(loginmodel.data!!)
@@ -85,13 +87,14 @@ class Products : Fragment(), ProductDetails_View {
                         )
                     listAdapter.onClick(this)
                     ViewCompat.setNestedScrollingEnabled(root.recycler_Products, false);
-
                     root.recycler_Products.layoutManager = LinearLayoutManager(
                         this.context!!.applicationContext,
                         LinearLayoutManager.VERTICAL,
                         false
                     )
                     root.recycler_Products.setAdapter(listAdapter)
+                }else {
+
                 }
             })
         }

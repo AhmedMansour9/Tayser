@@ -16,7 +16,7 @@ import com.tayser.Model.Cart_Response
 import com.tayser.R
 import kotlinx.android.synthetic.main.row_cart.view.*
 
-class Cart_Adapter(context: Context, val userList: List<Cart_Response.Data.X>)
+class Cart_Adapter (context: Context, val userList: List<Cart_Response.Data.X>)
     : RecyclerView.Adapter<Cart_Adapter.ViewHolder>() {
     companion object
     {

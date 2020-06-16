@@ -1,11 +1,11 @@
 package com.tayser.Activities
 
+import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -13,12 +13,13 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
-import com.tayser.ChangeLanguage
+import com.tayser.utils.ChangeLanguage
 import com.tayser.Fragments.Home
 import com.tayser.Fragments.More
 import com.tayser.Fragments.Notifications
 import com.tayser.Fragments.Orders
 import com.tayser.R
+import com.tayser.utils.NetworkCheck
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.ArrayList
 
@@ -42,6 +43,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         ChangeLanguage.changeLang(this)
+        if(!NetworkCheck.isConnect(this)) {
+            startActivity(Intent(this, NoItemInternetImage::class.java))
+        }
         setContentView(R.layout.activity_main)
         tabLayout = findViewById(R.id.tabs)
         setupViewPager(viewpager)

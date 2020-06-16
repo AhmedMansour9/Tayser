@@ -51,7 +51,7 @@
                 android:text="@string/checkout"
                 android:textAllCaps="false"
                 android:visibility="gone"
-                android:id="@+id/Btn_Checkout"
+                android:id="@+id/Btn_CheckoutService"
                 android:textColor="#fff"
                 android:background="@drawable/bc_buttonlogin"
                 android:layout_marginTop="@dimen/_35sdp"

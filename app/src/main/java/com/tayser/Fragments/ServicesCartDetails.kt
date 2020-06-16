@@ -11,8 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tayser.Adapter.ServiceCartDetails_Adapter
-import com.tayser.Adapter.ServicesCart_Adapter
-import com.tayser.ChangeLanguage
+import com.tayser.utils.ChangeLanguage
 import com.tayser.Model.CartServiceDetails_Response
 import com.tayser.Model.CartService_Response
 import com.tayser.R

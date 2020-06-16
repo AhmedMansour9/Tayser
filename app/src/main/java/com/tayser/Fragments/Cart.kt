@@ -1,6 +1,7 @@
 package com.tayser.Fragments
 
 
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,13 +15,16 @@ import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.chicchicken.View.PlusId_View
+import com.tayser.Activities.NoItemInternetImage
 import com.tayser.Adapter.Cart_Adapter
-import com.tayser.ChangeLanguage
+import com.tayser.Loading
+import com.tayser.utils.ChangeLanguage
 import com.tayser.Model.Cart_Response
 import com.tayser.Model.MessageEvent
 import com.tayser.Model.PlusCart_Response
 import com.tayser.R
 import com.tayser.ViewModel.Cart_ViewModel
+import com.tayser.utils.NetworkCheck
 import kotlinx.android.synthetic.main.fragment_cart.view.*
 import org.greenrobot.eventbus.EventBus
 
@@ -55,42 +59,28 @@ class Cart : Fragment() , PlusId_View, SwipeRefreshLayout.OnRefreshListener{
 
 
     private fun checkOrder() {
-//        root.Btn_Checkout.setOnClickListener() {
+        root.Btn_Checkout.setOnClickListener() {
+
+                    var productsByid = Checkout()
+                    val bundle = Bundle()
+                    productsByid.arguments = bundle
+            activity!!.supportFragmentManager?.beginTransaction()?.replace(R.id.Rela_Home, productsByid)
+                        ?.addToBackStack(null)?.commit()
 //
-//                if (this.arguments != null) {
-//                    bundle = this.arguments!!
-//                    Postion = bundle.getInt("view")
-//                    var productsByid = OrderLocation_Fragmet()
-//                    val bundle = Bundle()
-//                    bundle.putString("totalprice", T_TotalPrice!!)
-//                    productsByid.arguments = bundle
-//                    activity!!.supportFragmentManager?.beginTransaction()
-//                        ?.replace(Postion, productsByid)
-//                        ?.addToBackStack(null)?.commit()
-//                } else {
-//                    Postion = root.Rela_Cart.id
-//                    var productsByid = OrderLocation_Fragmet()
-//                    val bundle = Bundle()
-//                    bundle.putString("totalprice", T_TotalPrice!!)
-//                    productsByid.arguments = bundle
-//                    childFragmentManager?.beginTransaction()?.replace(Postion, productsByid)
-//                        ?.addToBackStack(null)?.commit()
-//
-//                }
-//
-//            }
-//        }
+            }
 
 
     }
 
     fun getAllCart(){
+        checkNetwork()
         root.SwipCart.isRefreshing= true
         this.context!!.applicationContext?.let {
             allproducts.getData(UserToken,
                 ChangeLanguage.getLanguage(context!!.applicationContext), it)
                 .observe(viewLifecycleOwner, Observer<Cart_Response> { loginmodel ->
                 root.SwipCart.isRefreshing=false
+                    Loading.Disable()
                 if(loginmodel!=null) {
                     root.recycler_Cart.visibility=View.VISIBLE
                     root.T_Total.visibility=View.VISIBLE
@@ -121,6 +111,7 @@ class Cart : Fragment() , PlusId_View, SwipeRefreshLayout.OnRefreshListener{
     }
 
     override fun minus_Id(Id: String) {
+        checkNetwork()
         this.context!!.applicationContext?.let {
             allproducts.AddPlusData(UserToken,"en",Id,"minus", it).observe(this, Observer<PlusCart_Response> { loginmodel ->
                 if(loginmodel!=null) {
@@ -132,6 +123,9 @@ class Cart : Fragment() , PlusId_View, SwipeRefreshLayout.OnRefreshListener{
     }
 
     override fun Plus_Id(Id: String) {
+        if(!NetworkCheck.isConnect(context!!.applicationContext)) {
+            startActivity(Intent(context!!.applicationContext, NoItemInternetImage::class.java))
+        }
         this.context!!.applicationContext?.let {
             allproducts.AddPlusData(UserToken,"en",Id,"plus", it).observe(this, Observer<PlusCart_Response> { loginmodel ->
                 if(loginmodel!=null) {
@@ -153,15 +147,18 @@ class Cart : Fragment() , PlusId_View, SwipeRefreshLayout.OnRefreshListener{
                 android.R.color.holo_blue_dark
         )
         root.SwipCart.post(Runnable {
+            Loading.Show(context!!)
             getAllCart()
 
         })
     }
     override fun onRefresh() {
+        Loading.Show(context!!)
         getAllCart()
 
     }
     override fun delete(Id: String) {
+       checkNetwork()
         val builder =
             AlertDialog.Builder(context!!)
         builder.setMessage(resources.getString(R.string.delete_post))
@@ -186,4 +183,11 @@ class Cart : Fragment() , PlusId_View, SwipeRefreshLayout.OnRefreshListener{
 
     }
 
+
+    fun checkNetwork(){
+        if(!NetworkCheck.isConnect(context!!.applicationContext)) {
+            startActivity(Intent(context!!.applicationContext, NoItemInternetImage::class.java))
+        }
+
+    }
 }

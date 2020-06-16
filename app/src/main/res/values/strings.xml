@@ -21,6 +21,8 @@
     <string name="pasweak">Password too weak</string>
     <string name="validemail">Please enter a valid email address</string>
     <string name="wrongemailorpass">Wrong Email or Password</string>
+    <string name="email_used">Email is used</string>
+
     <string name="orders">Orders</string>
     <string name="notifications">Notification</string>
     <string name="more">More</string>
@@ -29,7 +31,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="products">Products</string>
     <string name="mainten">Maintenance work</string>
-    <string name="imergency">Emergency services</string>
+    <string name="imergency">Emergency Services</string>
     <string name="establish">Establish</string>
     <string name="maintenance">Maintenance</string>
     <string name="currency">LE</string>
@@ -50,7 +52,7 @@
     <string name="delete_post">Do You want to delete this Item ?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
-    <string name="area">The area of the apartment</string>
+    <string name="area">Flat Area</string>
     <string name="n_room">Number Of Room</string>
     <string name="floor">Floor</string>
     <string name="notes">Notes</string>
@@ -59,6 +61,7 @@
     <string name="add_address">Add Address</string>
     <string name="change_address">Change Address</string>
     <string name="request_estab">Request Establish</string>
+    <string name="reques_clean">Request Clean Service</string>
     <string name="chhose">Choose</string>
     <string name="selectphoto">Select photo from gallery</string>
     <string name="selectcamera">Capture photo from camera</string>
@@ -72,6 +75,58 @@
     <string name="b_number">Building no :</string>
     <string name="f_number">Floor no :</string>
     <string name="apartment">Apartment no :</string>
+    <string name="name">Name :</string>
+    <string name="makedefult">Active</string>
+    <string name="edit">Edit</string>
+    <string name="defult">This is your Defult Address</string>
+    <string name="afteradaddress">You Should Active Your Address After Add it</string>
+    <string name="activited">This address active</string>
+    <string name="unactivited">This address Not active</string>
+    <string name="noaddress">No Address</string>
+    <string name="success">Congratulation, Welcome </string>
+    <string name="RETRY">RETRY</string>
+    <string name="noaddresss">No Address Found</string>
+    <string name="req_emergency">Request Emergency</string>
+    <string name="clean">Cleaning Services</string>
+    <string name="year">Annual</string>
+    <string name="month">Monthly</string>
+    <string name="day">Daily</string>
+    <string name="noproducts">No Products Found</string>
+    <string name="noservice">No Services Found</string>
+    <string name="total_price">Total Price : </string>
+    <string name="delvry">Delivry</string>
+    <string name="recentorders">Recent Orders</string>
+    <string name="myaddress">My Addresses</string>
+    <string name="aboutchick">About Tayser</string>
+    <string name="follot">Follow Us</string>
+    <string name="contactus">Contact Us</string>
+    <string name="logout">Log Out</string>
+    <string name="about">About</string>
+    <string name="myorders">My Orders</string>
+    <string name="myprofile">My Profile</string>
+    <string name="language">Language</string>
+    <string name="english">English</string>
+    <string name="arabic">Arabic</string>
+    <string name="message">Message</string>
+    <string name="changedata">Change Data</string>
+    <string name="changepass">Change Password</string>
+    <string name="change">Change </string>
+    <string name="confirmpass">ConFirm Password</string>
+    <string name="updated">Information has been updated Successfully</string>
+    <string name="updatedpassword">Password has been updated Successfully</string>
+    <string name="failedmsg">Failed, There is something wrong</string>
+    <string name="sendmsg">Send Message</string>
+    <string name="sendsuccess">Message has been Send</string>
+    <string name="newpassword">New Password</string>
+    <string name="oldpasswrong">Please Make Sure from your old password</string>
+    <string name="date">Date</string>
+    <string name="orderid">Orderid</string>
+    <string name="InProgress">In Progress</string>
+    <string name="Delivered">Delivered</string>
+    <string name="Canceled">Canceled</string>
+    <string name="payment_method">Payment method</string>
+    <string name="Deliveryaddress">Delivery address</string>
+    <string name="noorders">Not Found Any order</string>
 
 
 </resources>

@@ -4,10 +4,7 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.tayser.Model.CartServiceDetails_Response
-import com.tayser.Model.CartService_Response
-import com.tayser.Model.Cart_Response
-import com.tayser.Model.PlusCart_Response
+import com.tayser.Model.*
 import com.tayser.Retrofit.ApiClient
 import com.tayser.Retrofit.Service
 import retrofit2.Call
@@ -20,6 +17,8 @@ class Cart_ViewModel : ViewModel()
     var PlusProductsMutableLiveData: MutableLiveData<PlusCart_Response>? = null
     var CartServiceMutableLiveData: MutableLiveData<CartService_Response>? = null
     var CartServiceDetailsMutableLiveData: MutableLiveData<CartServiceDetails_Response>? = null
+    var OrderListMutableLiveData: MutableLiveData<OrderProduct_Response>? = null
+    var OrderListServiceMutableLiveData: MutableLiveData<OrderListService_Response>? = null
 
     private lateinit var context: Context
      lateinit var call:Any
@@ -42,6 +41,28 @@ class Cart_ViewModel : ViewModel()
         this.context = context
         getDataServiceValues(auth,lang)
         return CartServiceMutableLiveData as MutableLiveData<CartService_Response>
+    }
+
+    fun getOrderProducts(
+        auth:String,
+        order_id:String,
+        context: Context
+    ): LiveData<OrderProduct_Response> {
+        OrderListMutableLiveData = MutableLiveData<OrderProduct_Response>()
+        this.context = context
+        getDataOrderProducts(auth,order_id)
+        return OrderListMutableLiveData as MutableLiveData<OrderProduct_Response>
+    }
+
+    fun getOrderService(
+        auth:String,
+        order_id:String,
+        context: Context
+    ): LiveData<OrderListService_Response> {
+        OrderListServiceMutableLiveData = MutableLiveData<OrderListService_Response>()
+        this.context = context
+        getDataOrderServices(auth,order_id)
+        return OrderListServiceMutableLiveData as MutableLiveData<OrderListService_Response>
     }
 
     fun getDataDetailsService(
@@ -138,6 +159,58 @@ class Cart_ViewModel : ViewModel()
 
             override fun onFailure(call: Call<CartService_Response>, t: Throwable) {
                 CartServiceMutableLiveData?.setValue(null)
+
+            }
+        })
+    }
+
+    private fun getDataOrderServices(auth:String,order_id:String ) {
+        var map = HashMap<String, String>()
+        map.put("order_id",order_id)
+        var service = ApiClient.getClient()?.create(Service::class.java)
+        val call = service?.getOrderServices( map,"Bearer " + auth)
+        call?.enqueue(object : Callback, retrofit2.Callback<OrderListService_Response> {
+            override fun onResponse(
+                call: Call<OrderListService_Response>,
+                response: Response<OrderListService_Response>
+            ) {
+
+                if (response.code() == 200) {
+                    OrderListServiceMutableLiveData?.setValue(response.body()!!)
+
+                } else {
+                    OrderListServiceMutableLiveData?.setValue(null)
+                }
+            }
+
+            override fun onFailure(call: Call<OrderListService_Response>, t: Throwable) {
+                OrderListServiceMutableLiveData?.setValue(null)
+
+            }
+        })
+    }
+
+    private fun getDataOrderProducts(auth:String,order_id:String ) {
+        var map = HashMap<String, String>()
+        map.put("order_id",order_id)
+        var service = ApiClient.getClient()?.create(Service::class.java)
+        val call = service?.getOrderProduct( map,"Bearer " + auth)
+        call?.enqueue(object : Callback, retrofit2.Callback<OrderProduct_Response> {
+            override fun onResponse(
+                call: Call<OrderProduct_Response>,
+                response: Response<OrderProduct_Response>
+            ) {
+
+                if (response.code() == 200) {
+                    OrderListMutableLiveData?.setValue(response.body()!!)
+
+                } else {
+                    OrderListMutableLiveData?.setValue(null)
+                }
+            }
+
+            override fun onFailure(call: Call<OrderProduct_Response>, t: Throwable) {
+                OrderListMutableLiveData?.setValue(null)
 
             }
         })

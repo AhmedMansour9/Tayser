@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#f6f4f5"
+    android:background="#FDFBFC"
     android:id="@+id/Rela_Cart"
     tools:context=".Fragments.Cart">
 
@@ -60,15 +60,39 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_Address"
-        android:layout_below="@+id/toolbarr"
+        android:layout_below="@+id/AddAddress"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginStart="@dimen/_10sdp"
         android:layout_marginEnd="@dimen/_10sdp"
-        android:layout_marginTop="@dimen/_30sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
         android:scrollbars="horizontal" />
 
 
+    <ImageView
+        android:layout_width="@dimen/_120sdp"
+        android:layout_height="@dimen/_80sdp"
+        android:layout_centerInParent="true"
+        android:tint="#374c9b"
+        android:visibility="gone"
+        android:id="@+id/Img_noaddress"
+        android:src="@drawable/ic_noaddress"
+        />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/noaddresss"
+        android:visibility="gone"
+        android:textSize="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_below="@+id/Img_noaddress"
+        android:id="@+id/T_NoAddress"
+        android:layout_centerHorizontal="true"
+        android:textColor="#374c9b"
+        />
 
 
 

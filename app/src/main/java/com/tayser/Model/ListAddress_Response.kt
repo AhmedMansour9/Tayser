@@ -25,6 +25,8 @@ data class ListAddress_Response(
         var address: String?,
         @SerializedName("area")
         var area: String?,
+        @SerializedName("area_price")
+        var area_price: String?,
         @SerializedName("city")
         var city: String?,
         @SerializedName("country")

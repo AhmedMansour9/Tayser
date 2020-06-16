@@ -12,7 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import com.tayser.Adapter.Slider_Adapter
-import com.tayser.ChangeLanguage
+import com.tayser.utils.ChangeLanguage
 import androidx.lifecycle.Observer
 import androidx.preference.PreferenceManager
 import com.tayser.Model.*
@@ -20,10 +20,6 @@ import com.tayser.Model.*
 import com.tayser.R
 import com.tayser.ViewModel.Cart_ViewModel
 import com.tayser.ViewModel.SliderHome_ViewModel
-import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.fragment_home.view.*
-import kotlinx.android.synthetic.main.fragment_home.view.viewPager
-import kotlinx.android.synthetic.main.fragment_products.view.*
 import kotlinx.android.synthetic.main.fragment_sub_categories.*
 import kotlinx.android.synthetic.main.fragment_sub_categories.view.*
 import kotlinx.android.synthetic.main.fragment_sub_categories.view.T_Title
@@ -69,6 +65,7 @@ class SubCategories : Fragment() {
         openProducts()
         openMaintenence()
         openCart()
+        openEmergency()
         return root
     }
 
@@ -89,6 +86,20 @@ class SubCategories : Fragment() {
     private fun openMaintenence() {
         root.Card_Mainten.setOnClickListener(){
             var productsByid=Maintenence_Service()
+            val bundle = Bundle()
+            bundle.putParcelable("CategoryItem", categories)
+            productsByid.arguments=bundle
+            activity!!.supportFragmentManager.beginTransaction().add(R.id.Rela_Home, productsByid)
+                .addToBackStack(null).commit()
+
+        }
+
+
+    }
+
+    private fun openEmergency() {
+        root.Card_Emergency.setOnClickListener(){
+            var productsByid=Emergency()
             val bundle = Bundle()
             bundle.putParcelable("CategoryItem", categories)
             productsByid.arguments=bundle

@@ -11,7 +11,46 @@ interface Service {
     @POST("register")
      fun userRegister(
         @QueryMap map:Map<String,String>): Call<Register_Model>
-////
+    @POST("creat_user_address")
+    fun creat_user_address(
+        @QueryMap map:Map<String,String>, @Header("Authorization")auth:String): Call<AddAdress_Response>
+
+    @POST("edit_user_address")
+    fun edit_user_address(
+        @QueryMap map:Map<String,String>, @Header("Authorization")auth:String): Call<AddAdress_Response>
+
+    @Headers("Content-Type: application/json;charset=UTF-8")
+    @POST("order_list")
+    fun Myorders(
+        @QueryMap map:Map<String,String>,@Header("Authorization")auth:String): Call<MyOrders_Response>
+
+    @POST("social_login")
+    fun userLoginFacebook(
+        @QueryMap map:Map<String,String>): Call<Register_Model>
+
+    @POST("active_user_address")
+    fun active_user_address(
+        @QueryMap map:Map<String,String>, @Header("Authorization")auth:String): Call<AddAdress_Response>
+    @POST("about")
+    fun GetAboutus(@QueryMap queryMab: Map<String, String>): Call<About_Response>
+    @Headers("Content-Type: application/json;charset=UTF-8")
+    @POST("contact_message")
+    fun ContactUs(@QueryMap queryMab: Map<String, String>): Call<ContactUs_Response>
+
+    @Headers("Content-Type: application/json;charset=UTF-8")
+    @POST("update_profile")
+    fun EditProf(
+        @QueryMap map:Map<String,String>,@Header("Authorization")auth:String): Call<Edit_ProfileResponse>
+
+    @Headers("Content-Type: application/json;charset=UTF-8")
+    @POST("change_password")
+    fun ChangePassword(
+        @QueryMap map:Map<String,String>,@Header("Authorization")auth:String): Call<Edit_ProfileResponse>
+    @Headers("Content-Type: application/json;charset=UTF-8")
+    @POST("user_profile")
+    fun Profile(
+        @QueryMap map:Map<String,String>,@Header("Authorization")auth:String): Call<Profile_Response>
+
     @POST("login")
     fun userLogin(
         @QueryMap map:Map<String,String>): Call<Register_Model>
@@ -51,6 +90,11 @@ interface Service {
         @QueryMap map:Map<String,String>,@Header("Authorization")auth:String): Call<AddToCart_Response>
 
     @Headers("Content-Type: application/json;charset=UTF-8")
+    @POST("create_order")
+    fun create_order(
+        @QueryMap map:Map<String,String>,@Header("Authorization")auth:String): Call<AddToCart_Response>
+
+    @Headers("Content-Type: application/json;charset=UTF-8")
     @POST("add_cart_services")
     fun AddToCartService(
         @QueryMap map:Map<String,String>,@Header("Authorization")auth:String): Call<AddToCart_Response>
@@ -79,6 +123,16 @@ interface Service {
     fun getServiceCart(@QueryMap map:Map<String,String>,@Header("Authorization")auth:String): Call<CartService_Response>
 
     @Headers("Content-Type: application/json;charset=UTF-8")
+    @POST("order_list_product_details")
+    fun getOrderProduct(@QueryMap map:Map<String,String>,@Header("Authorization")auth:String): Call<OrderProduct_Response>
+
+
+    @Headers("Content-Type: application/json;charset=UTF-8")
+    @POST("order_list_product_details")
+    fun getOrderServices(@QueryMap map:Map<String,String>,@Header("Authorization")auth:String): Call<OrderListService_Response>
+
+
+    @Headers("Content-Type: application/json;charset=UTF-8")
     @POST("list_cart_services_details")
     fun getServiceDetailsCart(@QueryMap map:Map<String,String>,@Header("Authorization")auth:String): Call<CartServiceDetails_Response>
 
@@ -92,7 +146,35 @@ interface Service {
     @Multipart
     @POST("request_establishment")
     fun SentMessage(@Part img: MultipartBody.Part?,@Part img2: MultipartBody.Part?
-                    ,@Part img3: MultipartBody.Part?,@Part img4: MultipartBody.Part?, @Part("message") description: RequestBody, @Part("shop_id") id: RequestBody,
-                    @Header("Authorization")auth:String): Call<AddAdress_Response>
+                    ,@Part img3: MultipartBody.Part?,@Part img4: MultipartBody.Part?,
+                    @PartMap map:HashMap<String,@JvmSuppressWildcards RequestBody>
+                    ,@Header("Authorization")auth:String): Call<AddAdress_Response>
+
+    @Multipart
+    @POST("request_cleannesses")
+    fun request_cleannesses(@Part img: MultipartBody.Part?,@Part img2: MultipartBody.Part?
+                    ,@Part img3: MultipartBody.Part?,@Part img4: MultipartBody.Part?,
+                    @PartMap map:HashMap<String,@JvmSuppressWildcards RequestBody>
+                    ,@Header("Authorization")auth:String): Call<AddAdress_Response>
+
+    @Multipart
+    @POST("request_emergencies")
+    fun request_emergencies(@Part img: MultipartBody.Part?,@Part img2: MultipartBody.Part?
+                    ,@Part img3: MultipartBody.Part?,@Part img4: MultipartBody.Part?,
+                    @PartMap map:HashMap<String,@JvmSuppressWildcards RequestBody>
+                    ,@Header("Authorization")auth:String): Call<AddAdress_Response>
+
+
+    @Headers("Content-Type: application/json;charset=UTF-8")
+    @POST("countries")
+    fun getCountries(@QueryMap map:Map<String,String>): Call<Countries_Response>
+
+    @Headers("Content-Type: application/json;charset=UTF-8")
+    @POST("cities")
+    fun getCities(@QueryMap map:Map<String,String>): Call<Countries_Response>
+    @Headers("Content-Type: application/json;charset=UTF-8")
+    @POST("areas")
+    fun getStates(@QueryMap map:Map<String,String>): Call<Countries_Response>
+
 
 }

@@ -1,4 +1,4 @@
-package com.tayser
+package com.tayser.utils
 
 import android.content.Context
 import android.content.SharedPreferences

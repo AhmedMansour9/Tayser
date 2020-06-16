@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#f4f4f4"
+    android:background="#fff"
     android:id="@+id/Rela_Home">
 
     <RelativeLayout
@@ -106,8 +106,8 @@
          android:layout_width="match_parent"
          android:layout_height="wrap_content"
          android:id="@+id/Rela_Establish"
-         android:visibility="gone"
          android:layout_marginTop="@dimen/_15sdp"
+         android:visibility="gone"
          android:layout_below="@+id/Rela"
          >
 
@@ -119,6 +119,7 @@
             app:cardCornerRadius="@dimen/_5sdp"
             app:cardElevation="3dp"
             android:id="@+id/Card_Area"
+            android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginStart="@dimen/_20sdp"
             android:layout_marginEnd="@dimen/_20sdp"
             android:layout_height="@dimen/_40sdp">
@@ -130,13 +131,16 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="@string/area"
+                    android:hint="@string/area"
                     android:id="@+id/T_Area"
                     android:gravity="center_vertical"
                     android:background="@null"
+                    android:textColorHint="#a4a4a4"
+                    android:textSize="@dimen/_12sdp"
+                    android:inputType="number"
                     android:textColor="#a4a4a4"
                     android:paddingStart="@dimen/_10sdp"
-                    android:layout_marginEnd="@dimen/_45sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
                     android:singleLine="true" />
 
 
@@ -161,13 +165,16 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="@string/n_room"
+                    android:hint="@string/n_room"
                     android:id="@+id/T_Number"
+                    android:textSize="@dimen/_12sdp"
                     android:gravity="center_vertical"
+                    android:inputType="number"
                     android:background="@null"
+                    android:textColorHint="#a4a4a4"
                     android:textColor="#a4a4a4"
                     android:paddingStart="@dimen/_10sdp"
-                    android:layout_marginEnd="@dimen/_45sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
                     android:singleLine="true" />
 
 
@@ -194,13 +201,16 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="@string/floor"
+                    android:hint="@string/floor"
                     android:id="@+id/T_Floor"
+                    android:textSize="@dimen/_12sdp"
+                    android:textColorHint="#a4a4a4"
+                    android:inputType="number"
                     android:gravity="center_vertical"
                     android:background="@null"
                     android:textColor="#a4a4a4"
                     android:paddingStart="@dimen/_10sdp"
-                    android:layout_marginEnd="@dimen/_45sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
                     android:singleLine="true" />
 
             </RelativeLayout>
@@ -223,12 +233,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <TextView
+                <EditText
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="@string/notes"
+                    android:hint="@string/notes"
                     android:paddingTop="@dimen/_5sdp"
+                    android:inputType="text"
+                    android:textSize="@dimen/_12sdp"
+                    android:background="@null"
+                    android:textColorHint="#a4a4a4"
                     android:textColor="#a4a4a4"
+                    android:gravity="start|top"
                     android:id="@+id/T_EstaDescription"
                     android:paddingStart="@dimen/_10sdp"
                     android:paddingEnd="@dimen/_10sdp"
@@ -417,13 +432,13 @@
             android:paddingLeft="@dimen/_15sdp"
             android:paddingRight="@dimen/_15sdp">
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/_150sdp"
                 android:layout_height="wrap_content"
                 android:id="@+id/T_address"
-                android:layout_marginEnd="@dimen/_50sdp"
+                android:background="@null"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:textColor="@color/grey_90" />
-
-
             <View
                 android:layout_width="0dp"
                 android:layout_height="0dp"
@@ -439,16 +454,15 @@
 
         </LinearLayout>
 
-
         <Button
             android:layout_width="@dimen/_160sdp"
             android:layout_height="@dimen/_32sdp"
             android:layout_below="@+id/Linear_address"
             android:layout_centerHorizontal="true"
             android:text="@string/request_estab"
-            android:layout_marginBottom="@dimen/_20sdp"
             android:textAllCaps="false"
             android:id="@+id/Btn_RequestEstablish"
+            android:layout_marginBottom="@dimen/_20sdp"
             android:textColor="#fff"
             android:background="@drawable/bc_buttonlogin"
             android:layout_marginTop="@dimen/_10sdp"
@@ -470,6 +484,7 @@
         android:layout_width="match_parent"
         app:cardCornerRadius="@dimen/_5sdp"
         app:cardElevation="3dp"
+        android:layout_marginTop="@dimen/_10sdp"
         android:id="@+id/Card_Service"
         android:layout_marginStart="@dimen/_20sdp"
         android:layout_marginEnd="@dimen/_20sdp"
@@ -490,9 +505,10 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="@string/type_service"
+                android:hint="@string/type_service"
                 android:id="@+id/T_Services"
                 android:gravity="center_vertical"
+                android:textSize="@dimen/_12sdp"
                 android:editable="false"
                 android:cursorVisible="false"
                 android:background="@null"
@@ -523,9 +539,10 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="@string/description"
+                android:hint="@string/description"
                 android:paddingTop="@dimen/_5sdp"
                 android:textColor="#a4a4a4"
+                android:textSize="@dimen/_12sdp"
                 android:gravity="start|top"
                 android:background="@null"
                 android:textColorHint="#a4a4a4"
@@ -567,6 +584,7 @@
                 android:text="@string/choose_Date"
                 android:id="@+id/T_Date"
                 android:gravity="center_vertical"
+                android:textSize="@dimen/_12sdp"
                 android:textColor="#a4a4a4"
                 android:paddingStart="@dimen/_10sdp"
                 android:paddingEnd="@dimen/_30sdp"
@@ -591,6 +609,8 @@
 
 
     </RelativeLayout>
+
+
 
     </RelativeLayout>
 

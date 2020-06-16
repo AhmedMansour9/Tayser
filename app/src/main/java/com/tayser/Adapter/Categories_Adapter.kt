@@ -8,7 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.tayser.ItemAnimation
+import com.tayser.utils.ItemAnimation
 import com.tayser.Model.Sections_Response
 import com.tayser.R
 import com.tayser.View.ProductBytUd_View

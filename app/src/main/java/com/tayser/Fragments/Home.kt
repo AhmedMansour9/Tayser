@@ -2,6 +2,7 @@ package com.tayser.Fragments
 
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
@@ -12,15 +13,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import com.tayser.Adapter.Slider_Adapter
-import com.tayser.ChangeLanguage
+import com.tayser.utils.ChangeLanguage
 import androidx.lifecycle.Observer
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.kaopiz.kprogresshud.KProgressHUD
+import com.tayser.Activities.AddToCart
+import com.tayser.Activities.NoItemInternetImage
 import com.tayser.Adapter.Categories_Adapter
-import com.tayser.Adapter.ServicesCart_Adapter
-import com.tayser.ItemAnimation
+import com.tayser.Loading
+import com.tayser.utils.ItemAnimation
 import com.tayser.Model.*
 
 import com.tayser.R
@@ -28,11 +31,10 @@ import com.tayser.View.ProductBytUd_View
 import com.tayser.ViewModel.Cart_ViewModel
 import com.tayser.ViewModel.Sections_ViewModel
 import com.tayser.ViewModel.SliderHome_ViewModel
+import com.tayser.utils.NetworkCheck
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.view.*
 import kotlinx.android.synthetic.main.fragment_home.view.viewPager
-import kotlinx.android.synthetic.main.fragment_maintenence__service.*
-import kotlinx.android.synthetic.main.fragment_services.view.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -43,6 +45,8 @@ import java.util.*
  */
 class Home : Fragment() , SwipeRefreshLayout.OnRefreshListener, ProductBytUd_View {
     override fun onRefresh() {
+        Loading.Show(context!!)
+        checkNetwork()
         getSlider()
         getAllCategories()
         CartNumber=0
@@ -60,6 +64,7 @@ class Home : Fragment() , SwipeRefreshLayout.OnRefreshListener, ProductBytUd_Vie
         }
         root.viewPager!!.setCurrentItem(currentPage++, true)
     }
+
     private var CartNumber = 0
     private var currentPage = 0
     private var NUM_PAGES = 0
@@ -76,6 +81,8 @@ class Home : Fragment() , SwipeRefreshLayout.OnRefreshListener, ProductBytUd_Vie
 
         SwipRefresh()
         openCart()
+
+
         return root
     }
     private fun openCart() {
@@ -122,7 +129,6 @@ class Home : Fragment() , SwipeRefreshLayout.OnRefreshListener, ProductBytUd_Vie
 }
     fun SwipRefresh(){
         root.SwipHome.setOnRefreshListener(this)
-        root.SwipHome.isRefreshing=true
         root.SwipHome.isEnabled = true
         root.SwipHome.setColorSchemeResources(
             R.color.colorPrimary,
@@ -131,6 +137,8 @@ class Home : Fragment() , SwipeRefreshLayout.OnRefreshListener, ProductBytUd_Vie
             android.R.color.holo_blue_dark
         )
         root.SwipHome.post(Runnable {
+            Loading.Show(context!!)
+            checkNetwork()
             CartNumber=0
             getNumberOfCart()
             getNumberCartService()
@@ -173,7 +181,7 @@ class Home : Fragment() , SwipeRefreshLayout.OnRefreshListener, ProductBytUd_Vie
         this.context!!.applicationContext?.let {
             categories.getCategories(ChangeLanguage.getLanguage(it), it)
                 .observe(viewLifecycleOwner, Observer<Sections_Response> { loginmodel ->
-                    root.SwipHome.isRefreshing = false
+                    Loading.Disable()
 
                     if (loginmodel != null) {
 
@@ -181,7 +189,7 @@ class Home : Fragment() , SwipeRefreshLayout.OnRefreshListener, ProductBytUd_Vie
                             Categories_Adapter(
                                 context!!.applicationContext,
                                 loginmodel.data!! as List<Sections_Response.Data>
-                            ,ItemAnimation.FADE_IN
+                            , ItemAnimation.FADE_IN
                             )
                     listAdapter.onClick(this)
                         root.recycler_Categories.setLayoutManager(
@@ -197,12 +205,23 @@ class Home : Fragment() , SwipeRefreshLayout.OnRefreshListener, ProductBytUd_Vie
     }
 
     override fun Id(categories: Sections_Response.Data) {
-        var productsByid=SubCategories()
-        val bundle = Bundle()
-        bundle.putParcelable("CategoryItem", categories)
-        productsByid.arguments=bundle
-        activity!!.supportFragmentManager.beginTransaction().add(R.id.Rela_Home, productsByid)
-            .addToBackStack(null).commit()
+        if(categories.typeSection.equals("1")){
+            var productsByid=CleanService()
+            val bundle = Bundle()
+            bundle.putParcelable("CategoryItem", categories)
+            productsByid.arguments=bundle
+            activity!!.supportFragmentManager.beginTransaction().add(R.id.Rela_Home, productsByid)
+                .addToBackStack(null).commit()
+
+        }else {
+            var productsByid=SubCategories()
+            val bundle = Bundle()
+            bundle.putParcelable("CategoryItem", categories)
+            productsByid.arguments=bundle
+            activity!!.supportFragmentManager.beginTransaction().add(R.id.Rela_Home, productsByid)
+                .addToBackStack(null).commit()
+
+        }
     }
 
     @Subscribe(sticky = false, threadMode = ThreadMode.MAIN)
@@ -222,5 +241,11 @@ class Home : Fragment() , SwipeRefreshLayout.OnRefreshListener, ProductBytUd_Vie
 
     }
 
+    fun checkNetwork(){
+        if(!NetworkCheck.isConnect(context!!.applicationContext)) {
+            startActivity(Intent(context!!.applicationContext, NoItemInternetImage::class.java))
+        }
+
+    }
 
 }

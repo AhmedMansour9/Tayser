@@ -1,20 +1,24 @@
 package com.tayser.Activities
 
+import android.content.Intent
 import android.content.SharedPreferences
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.Window
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
+import com.kaopiz.kprogresshud.KProgressHUD
 import com.tayser.Model.AddToCart_Response
 import com.tayser.Model.MessageEvent
 import com.tayser.R
 import com.tayser.ViewModel.AddToCart_ViewModel
+import com.tayser.utils.CustomToast
+import com.tayser.utils.NetworkCheck
 import kotlinx.android.synthetic.main.activity_add_to_cart.*
 import org.greenrobot.eventbus.EventBus
+
 
 class AddToCart : AppCompatActivity() {
     var Total:Double=0.0
@@ -22,6 +26,10 @@ class AddToCart : AppCompatActivity() {
     var price:Double=0.0
     var id:String?= String()
     private lateinit var DataSaver: SharedPreferences
+    companion object{
+        private lateinit var hud: KProgressHUD
+
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +48,9 @@ class AddToCart : AppCompatActivity() {
 
     fun AddToCart(){
         Btn_AddToCart.setOnClickListener(){
-
+            if(!NetworkCheck.isConnect(this)) {
+                startActivity(Intent(this, NoItemInternetImage::class.java))
+            }
                 prograss_cart.visibility = View.VISIBLE
                 var addtocart: AddToCart_ViewModel = ViewModelProvider.NewInstanceFactory().create(
                     AddToCart_ViewModel::class.java)
@@ -51,11 +61,9 @@ class AddToCart : AppCompatActivity() {
                             prograss_cart.visibility = View.GONE
                             EventBus.getDefault().postSticky(MessageEvent("cart"))
                             if (loginmodel != null) {
-                                Toast.makeText(
-                                   applicationContext,
-                                    loginmodel.data,
-                                    Toast.LENGTH_SHORT
-                                ).show()
+                                CustomToast.toastIconSuccess(loginmodel.data
+                                    ,this)
+
                                 finish()
                             }
 

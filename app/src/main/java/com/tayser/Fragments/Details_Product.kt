@@ -20,14 +20,11 @@ import java.util.*
 import androidx.lifecycle.Observer
 import androidx.preference.PreferenceManager
 import com.tayser.Activities.AddToCart
-import com.tayser.Activities.MainActivity
-import com.tayser.ChangeLanguage
+import com.tayser.utils.ChangeLanguage
 import com.tayser.Model.*
 import com.tayser.ViewModel.Cart_ViewModel
 import kotlinx.android.synthetic.main.fragment_details__product.view.T_Title
 import kotlinx.android.synthetic.main.fragment_details__product.view.T_notification_numde
-import kotlinx.android.synthetic.main.fragment_home.view.*
-import kotlinx.android.synthetic.main.fragment_products.view.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -199,6 +196,8 @@ class Details_Product : Fragment() {
 
         }
     }
+
+
 
 
 }

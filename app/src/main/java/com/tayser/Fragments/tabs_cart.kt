@@ -45,7 +45,7 @@ class tabs_cart : Fragment() {
 
 
     private fun setupViewPager(viewPager: ViewPager) {
-      var  viewPagerAdapter = SectionsPagerAdapter(activity?.supportFragmentManager)
+      var  viewPagerAdapter = SectionsPagerAdapter(childFragmentManager)
         viewPagerAdapter.addFragment(Cart(), resources.getString(R.string.products)) // index 0
         viewPagerAdapter.addFragment(Services(),resources.getString(R.string.services) ) // index 1
         viewPager.adapter = viewPagerAdapter
